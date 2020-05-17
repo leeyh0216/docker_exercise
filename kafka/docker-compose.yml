@@ -1,0 +1,45 @@
+version: '3.1'
+services:
+  zoo1:
+    image: zookeeper:3.4.14
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+  
+  kafka1:
+    image: kafka:0.1
+    restart: always
+    hostname: kafka1
+    depends_on:
+      - zoo1
+    ports:
+      - 29092:29092
+    environment: 
+      - KAFKA_ADVERTISED_HOSTNAME=192.168.219.104
+      - KAFKA_ADVERTISED_PORT=29092
+      - ZOOKEEPER_SERVERS=zoo1:2181
+  kafka2:
+    image: kafka:0.1
+    restart: always
+    hostname: kafka2
+    depends_on:
+      - zoo1
+    ports:
+      - 29093:29093
+    environment:
+      - KAFKA_ADVERTISED_HOSTNAME=192.168.219.104
+      - KAFKA_ADVERTISED_PORT=29093
+      - ZOOKEEPER_SERVERS=zoo1:2181
+  kafka3:
+    image: kafka:0.1
+    restart: always
+    hostname: kafka3
+    depends_on:
+      - zoo1
+    ports:
+      - 29094:29094
+    environment:
+      - KAFKA_ADVERTISED_HOSTNAME=192.168.219.104
+      - KAFKA_ADVERTISED_PORT=29094
+      - ZOOKEEPER_SERVERS=zoo1:2181
